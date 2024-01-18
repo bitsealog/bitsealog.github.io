@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="Elton">
+
+
+  <meta name="subtitle" content="Record of digital life.">
+
+
+
+  <meta name="keywords" content="coding">
+
+
+<title>Java开发资料 | Bit sea log</title>
+
+
+
+<link rel="icon" href="/images/logo.svg">
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/typography_0.5.10.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+
+<!--<script src="https://cdn.tailwindcss.com?plugins=typography"></script>-->
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      isDark = !isDark;
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200 relative">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          <img class="w-5 mr-2 inline-block transition-transform group-hover:rotate-[30deg]" id="logo" src="/images/logo.svg" alt="Bit sea log" />
+          Bit sea log
+        </h2>
+      </a>
+      <div id="header-title" class="opacity-0 md:ml-2 md:mt-[0.1rem] text-xs font-medium whitespace-nowrap overflow-hidden overflow-ellipsis">
+        Java开发资料
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Posts</a>
+        
+          <a class="hidden sm:flex" href="/categories">Categories</a>
+        
+          <a class="hidden sm:flex" href="/tags">Tags</a>
+        
+        
+          
+            <a class="w-5 h-5 hidden sm:flex" title="Github" target="_blank" rel="noopener" href="https://github.com/bitsealog/">
+              <iconify-icon width="20" icon="ri:github-line"></iconify-icon>
+            </a>
+          
+        
+        <a class="w-5 h-5 hidden sm:flex" title="Github" href="rss2.xml">
+          <iconify-icon width="20" icon="ri:rss-line"></iconify-icon>
+        </a>
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Posts</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/categories" class="flex h-12 sm:h-auto items-center">Categories</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tags" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="pt-14">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden lg:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-prose mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Java开发资料
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="carbon-calendar" ></iconify-icon>
+            <time>2022-03-22</time>
+          </span>
+          <span class="text-gray-400">·</span>
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="ic:round-access-alarm" ></iconify-icon>
+            <span>1 min</span>
+          </span>
+          <span class="text-gray-400">·</span>
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="icon-park-outline:font-search" ></iconify-icon>
+            <span>351 words</span>
+          </span>
+          
+            <span class="text-gray-400">·</span>
+            <span class="flex items-center gap-1">
+              <iconify-icon width="16" icon="icon-park-outline:box" class="mr-2"></iconify-icon>
+              <a class="article-category-link" href="/categories/reference/">reference</a>
+            </span>
+          
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content prose m-auto slide-enter-content dark:prose-invert">
+    <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>汇总Java相关的文档教程、开源项目、常用工具信息。</p>
+<h2 id="文档资料"><a href="#文档资料" class="headerlink" title="文档资料"></a>文档资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.baeldung.com/">baeldung</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html">oracle jdk说明</a></li>
+</ul>
+<h2 id="开源项目或工具"><a href="#开源项目或工具" class="headerlink" title="开源项目或工具"></a>开源项目或工具</h2><h3 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ReactiveX/RxJava">响应式编程库RxJava</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/LMAX-Exchange/disruptor">高性能线程消息库disruptor</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/looly/hutool">Java工具类库hutool</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oblac/jodd">轻量级工具类库 jodd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/tink">google加密库tink</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/resilience4j/resilience4j">熔断库resilience4j</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pagehelper/Mybatis-PageHelper">mybatis通用分页插件PageHelper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/commons-math">数学计算工具包commons-math</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alibaba/transmittable-thread-local">跨线程池ThreadLocal</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/JSQLParser/JSqlParser">SQL Parser</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/carrotsearch/hppc">高性能原生数据类型集合库hppc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RoaringBitmap/RoaringBitmap">位图工具包RoaringBitmap</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wstrange/GoogleAuth">google auth服务端实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mrniko/netty-socketio">基于Netty实现的socket.io协议库</a></li>
+</ul>
+<h3 id="framework"><a href="#framework" class="headerlink" title="framework"></a>framework</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/xuxueli/xxl-job">分布式任务调度平台xxl-job</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/seata/seata">分布式事务解决方案Seata</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/shardingsphere">分库分表中间件shardingsphere</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/graphql-java/graphql-java">GraphQL实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/changmingxie/tcc-transaction">TCC型事务java实现tcc-transaction</a></li>
+</ul>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/alibaba/arthas">Alibaba Java诊断工具Arthas</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chewiebug/GCViewer">GC日志查看工具GCViewer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bazelbuild/bazel">多语言可扩展构建工具bazel</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ctripcorp/apollo">分布式配置中心Apollo</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rzwitserloot/lombok">Java语言增强插件Lombok</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jOOQ/jOOQ">SQL映射工具JOOQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alibaba/otter">数据库数据实时同步工具otter</a></li>
+</ul>
+<h3 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TheAlgorithms/Java">各式算法Java实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/iluwatar/java-design-patterns">Java设计模式实现示例</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/eugenp/tutorials">Java各式技术代码示例教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/seaswalker/spring-analysis">Spring源码阅读笔记</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jobbole/awesome-java-cn">伯乐在线整理的awesome Java资料</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mzheravin/exchange-core">撮合引擎实现exchange-core</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Oracle: SPI Introduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/index.html">spring boot官方文档索引</a></li>
+<li><a target="_blank" rel="noopener" href="https://martinfowler.com/articles/lmax.html">Martin Fowler: The LMAX Architecture</a></li>
+</ul>
+<h2 id="idea插件"><a href="#idea插件" class="headerlink" title="idea插件"></a>idea插件</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7495--ignore/">ignore高亮插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7160-camelcase/">命名方式转换</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/9883-intellij-idea-properties-sorter/">properties文件内容排序</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7973-sonarlint/">sonar检测插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/9792-key-promoter-x/">快捷键提示插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/">lombok</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/4509-statistic/">代码统计插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/2162-string-manipulation/">字符串操作插件</a></li>
+</ul>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/reference/">reference</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/reference/developer/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          程序员个人技能提升
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/reference/management/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          团队管理资料
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+  <!-- comment -->
+  <div class="article-comments mt-12">
+    
+
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style="color: inherit;">CC BY-NC-SA 4.0</a>
+    <span>© 2024</span>
+    <iconify-icon width="18" icon="emojione-monotone:maple-leaf" ></iconify-icon>
+    <a href="https://github.com/bitsealog" target="_blank" rel="noopener noreferrer">bitsealog</a>
+  </div>
+  <!-- powered by -->
+  <div class="flex items-center gap-2">
+    <span>Powered by</span>
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>
+    <span>&</span>
+    <a href="https://github.com/bitsealog/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>
+  </div>
+
+</footer>
+
+  <div class="back-to-top box-border fixed right-6 z-1024 -bottom-20 rounded py-1 px-1 bg-slate-900 opacity-60 text-white cursor-pointer text-center dark:bg-slate-600">
+    <span class="flex justify-center items-center text-sm">
+      <iconify-icon width="18" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+      <span id="scrollpercent"><span>0</span> %</span>
+    </span>
+  </div>
+  
+<script src="/js/main.js"></script>
+
+
+
+
+  <div class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden" id="maple"></div>
+</body>
+
+</html>
