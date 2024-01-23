@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="Elton">
+
+
+  <meta name="subtitle" content="Record of digital life.">
+
+
+
+  <meta name="keywords" content="coding">
+
+
+<title>趋势交易终极指南 | Bit Sea Log</title>
+
+
+
+<link rel="icon" href="/images/logo.svg">
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/typography_0.5.10.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+
+<!--<script src="https://cdn.tailwindcss.com?plugins=typography"></script>-->
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      isDark = !isDark;
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200 relative">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          <img class="w-5 mr-2 inline-block transition-transform group-hover:rotate-[30deg]" id="logo" src="/images/logo.svg" alt="Bit Sea Log" />
+          Bit Sea Log
+        </h2>
+      </a>
+      <div id="header-title" class="opacity-0 md:ml-2 md:mt-[0.1rem] text-xs font-medium whitespace-nowrap overflow-hidden overflow-ellipsis">
+        趋势交易终极指南
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Posts</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        
+          
+            <a class="w-5 h-5 hidden sm:flex" title="Github" target="_blank" rel="noopener" href="https://github.com/bitsealog/">
+              <iconify-icon width="20" icon="ri:github-line"></iconify-icon>
+            </a>
+          
+        
+        <a class="w-5 h-5 hidden sm:flex" title="Github" href="rss2.xml">
+          <iconify-icon width="20" icon="ri:rss-line"></iconify-icon>
+        </a>
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Posts</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="pt-14">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden lg:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-prose mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        趋势交易终极指南
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="carbon-calendar" ></iconify-icon>
+            <time>2023-01-22</time>
+          </span>
+          <span class="text-gray-400">·</span>
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="ic:round-access-alarm" ></iconify-icon>
+            <span>11 min</span>
+          </span>
+          <span class="text-gray-400">·</span>
+          <span class="flex items-center gap-1">
+            <iconify-icon width="18" icon="icon-park-outline:font-search" ></iconify-icon>
+            <span>3.4k words</span>
+          </span>
+          
+            <span class="text-gray-400">·</span>
+            <span class="flex items-center gap-1">
+              <iconify-icon width="16" icon="icon-park-outline:box" class="mr-2"></iconify-icon>
+              <a class="article-category-link" href="/categories/trading/">trading</a>
+            </span>
+          
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content prose m-auto slide-enter-content dark:prose-invert">
+    <blockquote>
+<p>Coinalyze 博客翻译系列</p>
+</blockquote>
+<p>翻译自<a target="_blank" rel="noopener" href="https://coinalyze.net/blog/trend-trading-the-ultimate-guide/">https://coinalyze.net/blog/trend-trading-the-ultimate-guide/</a></p>
+<p>确定加密货币交易趋势的一种有效方法是研究技术指标。事实上，所有技术指标都是考虑了一些市场事件以帮助交易者预测趋势和趋势反转的数学计算。</p>
+<p>了解趋势指标是开始交易加密货币的好方法。然而，有时，在做出交易决策时，结合指标读数将被证明是最重要的。</p>
+<p>为了帮助您更好地理解六种最重要的技术指标，我们将为您介绍每一项并说明如何使用：</p>
+<ul>
+<li>移动平均线：Moving Averages (MA)</li>
+<li>相对强弱指数：Relative Strength Index (RSI)</li>
+<li>随机震荡指标：Stochastic Oscillators</li>
+<li>移动平均线收敛背离：Moving Average Convergence Divergences (MACD)</li>
+<li>平均方向指数：Average Directional Indexes (ADX)</li>
+<li>平衡交易量：On-Balance Volume (OBV)</li>
+</ul>
+<h2 id="移动平均线-MA"><a href="#移动平均线-MA" class="headerlink" title="移动平均线 (MA)"></a>移动平均线 (MA)</h2><p>移动平均线由一条线表示，该线遵循加密货币在特定预定时期内的平均价格。</p>
+<p>MA 有短期和长期之分，交易者根据需要使用：</p>
+<ul>
+<li>50日平均值</li>
+<li>100日平均值</li>
+<li>200日平均值</li>
+</ul>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/moving-averages.jpg" alt="/images/the_ultimate_guide_for_trend_trading/moving-averages.jpg"></p>
+<p>从上图中可以看出，50日平均线(红色)随着<a target="_blank" rel="noopener" href="https://coinalyze.net/bitcoin/price-live/">比特币价格 (BTC)</a> 一起剧烈震荡，而 100<br>日平均线(黄色)的反应要慢得多，因此有时会向前者相反的方向移动。</p>
+<p>200日均线(绿色)几乎没有任何垂直运动，而水平缓慢下降，这表明尽管高震荡性造成了所有震荡，但投资者对比特币的情绪仍然看跌。</p>
+<p>这些平均值中的每一个都很难单独使用，但结合读数可以让我们了解可能的趋势逆转。同一张图表清楚地表明，这些趋势线有时会相互交叉。这些事件根据其性质，被称为<br><strong>黄金交叉或死亡交叉</strong>。</p>
+<h3 id="黄金-死亡交叉-Golden-Death-cross"><a href="#黄金-死亡交叉-Golden-Death-cross" class="headerlink" title="黄金&#x2F;死亡交叉(Golden&#x2F;Death cross)"></a>黄金&#x2F;死亡交叉(Golden&#x2F;Death cross)</h3><p>当<strong>短期移动平均线突破其长期移动平均线</strong>时，就会出现金叉，这被认为是买入信号。</p>
+<p>另一方面，当发生完全相反的情况时，即<strong>短期移动平均线低于长期移动平均线</strong>时，就会发生死亡交叉。当这种情况发生时，交易者会考虑出售他们的加密货币。</p>
+<p>如下所示，在大多数情况下，价格遵循分析。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/golden-death-cross.jpg" alt="/images/the_ultimate_guide_for_trend_trading/golden-death-cross.jpg"></p>
+<p>简单的移动平均线可能不足以让日间交易者做出明智的决定，因此，他们使用**指数移动平均线(EMA)**，这是通过更复杂的计算推导出来的。</p>
+<p>波段交易者和日间交易者使用较短的时间范围来下交易订单，例如 5 日、10 日、20 日和 50 日，他们使用 EMA<br>来建立交易头寸。此外，当解释最流行的技术指标之一——MACD 时，EMA 将会很重要。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/ema-golden-death-cross.jpg" alt="/images/the_ultimate_guide_for_trend_trading/ema-golden-death-cross.jpg"></p>
+<h2 id="相对强弱指数-RSI"><a href="#相对强弱指数-RSI" class="headerlink" title="相对强弱指数(RSI)"></a>相对强弱指数(RSI)</h2><p>告诉交易者加密货币交易价格是否高于当前实际价格(超买)或低于当前实际价格(超卖)的动量指标称为相对强弱指数(RSI)。</p>
+<p>它由从 0 到 100 的振荡器表示，其中每个小于 30 的值都被认为是超卖，而高于 70 的值则表示超买的加密货币。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/rsi.jpg" alt="/images/the_ultimate_guide_for_trend_trading/rsi.jpg"></p>
+<p>当根据 RSI 进行交易时，交易者使用以下主要方法：</p>
+<ul>
+<li>回调交易策略：Pullback trading tactic</li>
+<li>分歧：Divergences</li>
+<li>震荡过滤：Swing rejections</li>
+</ul>
+<h3 id="回调交易策略-Pullback-trading-tactic"><a href="#回调交易策略-Pullback-trading-tactic" class="headerlink" title="回调交易策略(Pullback trading tactic)"></a>回调交易策略(Pullback trading tactic)</h3><p>一些交易者在趋势上升时在超卖值附近买入加密货币，或者在下降趋势中在超买附近进行空头交易。</p>
+<p>例如，当加密货币的长期趋势向上时，交易者会在 RSI 跌破 50 关口然后立即返回到其上方时识别出买入信号。</p>
+<p>这种走势代表价格回调，一旦回调(根据 RSI)结束并且长期趋势恢复，交易者就会建仓。</p>
+<p>在实施这种交易策略期间，交易者使用 50 水平，因为 RSI 在上升趋势期间通常不会达到 30，除非潜在的趋势反转已经开始。</p>
+<p>另一方面，当加密货币处于下降趋势并且 RSI 升至 50 以上然后再次低于 50 时，交易者会识别出空头交易信号。</p>
+<h3 id="背离-Divergences"><a href="#背离-Divergences" class="headerlink" title="背离(Divergences)"></a>背离(Divergences)</h3><p>交易者可以检测看涨或看跌背离，具体取决于他们标记的趋势反转。</p>
+<p>当 RSI 值触底后触及更高的低点时，就会出现看涨背离。与此同时，加密货币的价格触及更低的低点，这表明趋势可能会逆转。</p>
+<p>交易者应等待 RSI 触及更高的低点并突破后再建仓。</p>
+<p>与看涨对应的情况相反，当 RSI 读数达到最大值后触及更低的高点，随后出现价格峰值时，就会出现看跌 RSI。</p>
+<h3 id="震荡过滤-Swing-rejections"><a href="#震荡过滤-Swing-rejections" class="headerlink" title="震荡过滤(Swing rejections)"></a>震荡过滤(Swing rejections)</h3><p>识别震荡过滤比简单的背离更加复杂，但两者也可以重叠。与背离的情况一样，震荡过滤可能是看涨或看跌，具体取决于它们倾向于表达的趋势反转。</p>
+<p>交易者应该检测到四个主要阶段，以便能够按照这种看涨反转交易策略进行交易：</p>
+<ol>
+<li>RSI 振荡器跌破上述 30% 关口</li>
+<li>RSI 回到 30% 以上</li>
+<li>RSI 再次下跌，但这次没有回到超卖区域</li>
+<li>RSI 随后突破近期高点</li>
+</ol>
+<p>当然，看跌的震荡过滤，与上面的相反，表现会截然相反。看涨震荡过滤的典型例子可以在下面的<a target="_blank" rel="noopener" href="https://coinalyze.net/bitcoin/usd/bitfinex/price-chart-live/">BTC &#x2F; USD 图表</a><br>中看到。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/rsi-swing-rejection.jpg" alt="/images/the_ultimate_guide_for_trend_trading/rsi-swing-rejection.jpg"></p>
+<h2 id="随机振荡器-Stochastic-Oscillator"><a href="#随机振荡器-Stochastic-Oscillator" class="headerlink" title="随机振荡器(Stochastic Oscillator)"></a>随机振荡器(Stochastic Oscillator)</h2><p>随机振荡指标是动量指标。</p>
+<p>它将加密货币的收盘价与其特定时间范围(通常是 14 天)内的价格范围进行比较。其对市场变动的灵敏度是可调的，可以通过延长或缩短时间段或计算结果的移动平均值来降低。</p>
+<p>与 RSI 类似，随机振荡器显示加密货币是否超买或超卖，但主要区别在于，无论加密货币价格上涨或下跌的速度如何，随机振荡器的 0 至<br>100 范围变动将保持不变。从下面的 BTC&#x2F;USD 图表可以清楚地看出两者之间的区别。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/stochastic.jpg"></p>
+<p>相比RSI 表明加密货币在 70 以上和 30 以下存在超买和超卖，随机震荡指标认为当加密货币达到 80 以上时为超买，当其跌至 20<br>以下时为超卖。</p>
+<p>随机指标显示两条线。两者中K线响应较快，D线响应较慢。</p>
+<p>交易者需要关注 D 线和加密货币价格开始变化并进入超买或超卖位置。当指标移动到 80 水平之上时，发出卖出指令；当该指标跌破 20<br>水平并伴随成交量上升时，发出相反的指令(发出买入指令)。</p>
+<p>还有一种上述两种测量值的组合，称为<strong>随机 RSI</strong>，它是通过将随机振荡指标公式应用于一组 RSI 值(而不是 0 到 100<br>范围内的标准价格数据(在某些情况下为 0和 1))来计算。</p>
+<p>为了进行比较，下图显示了带有随机 RSI 指标的相同图表。<br><img src="/images/the_ultimate_guide_for_trend_trading/stochastic-rsi.jpg"></p>
+<h2 id="移动平均线收敛背离-MACD"><a href="#移动平均线收敛背离-MACD" class="headerlink" title="移动平均线收敛背离(MACD)"></a>移动平均线收敛背离(MACD)</h2><p>如前所述，移动平均收敛背离(MACD)在趋势和动量指标中是首屈一指的。</p>
+<p>简而言之，MACD 计算加密货币的**26日和12日指数移动平均线 (EMA) **之间的差异，两者都使用计算期间的收盘价。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/macd.jpg" alt="/images/the_ultimate_guide_for_trend_trading/macd.jpg"></p>
+<p>从上图可以看出，经典的 MACD 图表还有<strong>9日EMA</strong>，可作为<strong>下达买卖订单的信号</strong>。</p>
+<p>当 MACD 读数高于 9 日均线时，显示价格看涨趋势。另一方面，当 MACD 低于9日均线时，交易者应考虑出售加密货币。</p>
+<p>MACD 柱状图(橙色)说明了 MACD 与其9日EMA之间的差异。当 MACD 高于9日均线时，柱状图位于中性值上方；当 MACD 低于9日均线时，柱状图位于中性值下方。</p>
+<p>随着加密货币价格的上涨，直方图变得更大，价格变动的速度反映在直方图的大小中。这同样适用于加密货币价格下跌的情况。</p>
+<h3 id="根据背离进行交易-Trading-according-to-divergences"><a href="#根据背离进行交易-Trading-according-to-divergences" class="headerlink" title="根据背离进行交易(Trading according to divergences)"></a>根据背离进行交易(Trading according to divergences)</h3><p>尽管 MACD 可以用作趋势或动量指标，但交易者也倾向于使用它来进行<strong>背离交易</strong>。</p>
+<p>使用这种策略的交易者等待加密货币价格达到新高的时机，而 MACD 却未能做到这一点，从而揭示了价格与动量之间的背离，表明趋势可能会逆转。</p>
+<p>下面的 BTC&#x2F;USD 图表显示了此类背离的一个典型例子。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/macd-divergence-1.jpg"></p>
+<p>然而，由于加密货币市场震荡性很大，背离交易无论如何都不是决定进入或退出位置的万无一失的方式，因为势头可能会突然出现，诱骗交易者过早买卖加密货币。</p>
+<p>尽管如此，交易者还是能够降低这种背离假突破的风险。</p>
+<p>例如，交易负背离的交易者在背离的初始点持有部分空头头寸，其投资金额仅为其预期投资的一半。</p>
+<p>随着价格进一步走势，交易者不会将止损设在最近的震荡高点，而是仅当 MACD 柱状图的高点超过其之前的震荡高点时才退出交易，这表明他的交易是错误的。</p>
+<p>然而，如果 MACD 柱状图没有攀升至新的震荡高点，交易者就会增加头寸，从而获得更高的空头平均价格。</p>
+<p>部分头寸背离交易的例子可以在下面的 BTC&#x2F;USD 图表中看到，交易者会在第一次背离发生时卖出一部分投资，并在发现第二次背离时卖出剩余的投资，从而在第二次背离的趋势反转期间获得更多利润。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/macd-divergence-two-positions.jpg"></p>
+<p>如前所述，MACD 并不能提供交易者从加密货币震荡交易中受益所需的一切，但如果正确使用并符合其他技术指标，它会非常有帮助。</p>
+<h2 id="平均方向指数-ADX"><a href="#平均方向指数-ADX" class="headerlink" title="平均方向指数 (ADX)"></a>平均方向指数 (ADX)</h2><p>平均方向指数(ADX)是一种用于确定加密货币价格变动趋势的相对强度以及该资产维持这种趋势的可能性有多大的技术指标。</p>
+<p>ADX 读数超过25表明增长趋势强劲，读数低于20则表明趋势疲软。<br><img src="/images/the_ultimate_guide_for_trend_trading/adx.jpg"></p>
+<p>交易者通常不会完全根据 ADX 建仓，而是用它来补充可能缺乏的其他指标或额外的方向信息和支持。</p>
+<h2 id="平衡交易量-OBV"><a href="#平衡交易量-OBV" class="headerlink" title="平衡交易量 (OBV)"></a>平衡交易量 (OBV)</h2><p>该定义指出：“平衡交易量(OBV)是一种动量指标，利用交易量流来预测加密货币价格的变化。”它遵循的前提是，当成交量大幅增加，但未能对价格产生影响时，加密货币的估值最终将跟随成交量变化，反之亦然。</p>
+<p>然而，在后端，OBV 用于区分大型投资者(机构投资者或受欢迎的鲸鱼)和散户投资者的投资。</p>
+<p>例如，当鲸鱼开始从零售卖家购买加密货币时，加密资产的数量将会上升，而代币的价格很容易保持相当水平。机构投资者因成交量上升，吸引散户投资者，推高价格。</p>
+<p>最终，鲸鱼一旦对收益感到满意就开始抛售，而散户投资者则继续买入，这反映在交易量上，类似地也反映在 OBV 上。</p>
+<h3 id="背离-Divergence"><a href="#背离-Divergence" class="headerlink" title="背离(Divergence)"></a>背离(Divergence)</h3><p>与其他指标的情况一样，根据 OBV 进行交易的主要策略是发现指标读数和价格变动之间的差异，这可能会宣布趋势反转。</p>
+<p>OBV 背离的主要假设是成交量先于价格变动。</p>
+<p>因此，当 OBV 形成更高的低点时，尽管价格仍在下跌，但看涨背离就会发生。当然，它的看跌背离可以通过指标的高点较低来发现，而价格仍在攀升。</p>
+<p>下图是 OBV 看涨背离的一个令人兴奋的例子。</p>
+<p><img src="/images/the_ultimate_guide_for_trend_trading/obv-divergence.jpg"></p>
+<p>OBV技术指标可以帮助交易者通过价格和交易量之间的相关性来推断加密货币价格的未来走势。与本指南中涵盖的其他指标相结合，它可以提供有价值的市场洞察。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这些指标中的每一个都被交易者广泛使用，可以单独使用，也可以与其他技术或基本面分析部分结合使用，具体取决于市场状况和相关资产。</p>
+<p>尽管每种工具在做出交易决策时都非常有用，但基于坚实的技术基础学习新的交易策略并将其实施到交易策略中只会带来更高的成功率，从而获得更大的收益。</p>
+<p>最后，我们希望本指南提供有价值的信息，帮助您提高交易技巧。请继续关注 Coinalyze 博客，了解更多类似内容。</p>
+<p>在下次之前，请负责任地进行交易。</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/trading/">trading</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+    </div>
+    <div>
+      
+        <a href="/web3/miscellaneous/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Web3杂烩
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+  <!-- comment -->
+  <div class="article-comments mt-12">
+    
+
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style="color: inherit;">CC BY-NC-SA 4.0</a>
+    <span>© 2024</span>
+    <iconify-icon width="18" icon="emojione-monotone:maple-leaf" ></iconify-icon>
+    <a href="https://github.com/bitsealog" target="_blank" rel="noopener noreferrer">bitsealog</a>
+  </div>
+  <!-- powered by -->
+  <div class="flex items-center gap-2">
+    <span>Powered by</span>
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>
+    <span>&</span>
+    <a href="https://github.com/bitsealog/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>
+  </div>
+
+</footer>
+
+  <div class="back-to-top box-border fixed right-6 z-1024 -bottom-20 rounded py-1 px-1 bg-slate-900 opacity-60 text-white cursor-pointer text-center dark:bg-slate-600">
+    <span class="flex justify-center items-center text-sm">
+      <iconify-icon width="18" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+      <span id="scrollpercent"><span>0</span> %</span>
+    </span>
+  </div>
+  
+<script src="/js/main.js"></script>
+
+
+
+
+  <div class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden" id="maple"></div>
+</body>
+
+</html>
